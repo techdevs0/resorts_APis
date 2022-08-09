@@ -53,7 +53,7 @@ app.use('/files', fileRouter)
 
 const CONNECTION_URL = 'mongodb+srv://root:729711807352a@cluster0.s9eigte.mongodb.net/resorts?retryWrites=true&w=majority'
 // const CONNECTION_URL = 'mongodb://localhost:27017/memories';
-const port = process.env.port || 5000;
+const port = process.env.PORT || 5000;
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser:true})
 .then(() => app.listen(port, () => console.log("successful running on port"+port)))
