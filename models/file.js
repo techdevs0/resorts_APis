@@ -10,6 +10,10 @@ const fileSchema = new mongoose.Schema({
       type: String,
       required: [true, "Uploaded file must have a name"],
     },
+    destination: {
+      type: String,
+      required: [true, "Uploaded file must have a url"],
+    },
   });
 
 const File = mongoose.model('images', fileSchema);

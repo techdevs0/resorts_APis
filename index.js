@@ -6,6 +6,7 @@ import router from "./routes/posts.js";
 import File from "./models/file.js";
 
 import fileRouter from "./routes/file.js";
+import roomRouter from "./routes/rooms.js";
 
 //   const upload = multer({ dest: 'files/' })
 const app = express();
@@ -19,8 +20,10 @@ app.get('/', function (req, res) {
     res.send("hello world");
 });
 
+app.use('/uploads',express.static('uploads'))
 app.use('/posts', router)
 app.use('/files', fileRouter)
+app.use('/rooms', roomRouter)
 
 // app.get('/uploadFile', (req, res) => {
 //     res.send("eeeeeeeeeeeeeee")

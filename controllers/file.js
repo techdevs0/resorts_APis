@@ -3,10 +3,22 @@ import File from "../models/file.js";
 
 
 export const getFiles = async (req,res) =>{
-    // res.send('this works')
+    let baseUrl = req.headers.host
     try {
-        const file = await File.find();
-        res.status(200).json(file);
+        let files = await File.find();
+        let updatedFiles = []
+        files.forEach(element => {
+            let image = {
+                url:element.name,
+                _id:element.id,
+                destination: element.destination,
+                avatar: `http://${baseUrl}/${element.destination}${element.name}`,
+                is360:"false",
+                alt_tag:"i am alt tag"
+            }
+            updatedFiles.push(image)
+        });
+        res.status(200).json(updatedFiles);
     } catch (error) {
         res.status(404).json({ message: error.message})
     }
@@ -20,6 +32,7 @@ export const createFiles = async (req, res) => {
             console.log("file is here", file)
             let image = {};
             image.name = file.filename;
+            image.destination = file.destination;
             images.push(image);
         })
         try {

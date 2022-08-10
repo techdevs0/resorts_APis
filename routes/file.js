@@ -1,11 +1,16 @@
 import express from "express";
 import multer from "multer";
 import { createFiles, getFiles } from "../controllers/file.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
 
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, 'files/')
+      cb(null, 'uploads/')
     },
     filename: function (req, file, cb) {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
@@ -17,9 +22,7 @@ const upload = multer({ storage: storage })
 
 const fileRouter = express.Router();
 
-fileRouter.get('/', (req, res) => {
-    res.send("eeeeeeeeeeeeeee")
-})
+fileRouter.get('/', getFiles)
 
 fileRouter.post("/", upload.array("image"), createFiles);
 
