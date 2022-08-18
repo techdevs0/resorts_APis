@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import File from "../models/file.js";
-
+import fs from "fs";
 
 export const getFiles = async (req,res) =>{
     let baseUrl = req.headers.host
@@ -24,6 +24,7 @@ export const getFiles = async (req,res) =>{
     }
 }
 export const createFiles = async (req, res) => {
+    res.send(req.files)
     if(!req.files){
         res.status(500).json("error")
     } else {
@@ -46,13 +47,16 @@ export const createFiles = async (req, res) => {
     }
 }
 
-// export const updatePost = async (req, res) => {
-//     const { id: _id } = req.params;
-//     const post = req.body;
+export const deleteFile = async (req, res) => {
+    
+    let _id = req.params.id;
+    
+    try {
+        let file = await File.findByIdAndDelete(_id);
+        fs.unlinkSync(file.destination+file.name);
+        res.status(200).send('Successfully! Image has been Deleted');
+    } catch (err) {
+        return res.status(400).send(err);
+    }
 
-//     if(!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("no data found");
-
-//     const updatePost = await PostMessage.findByIdAndUpdate(_id, post, { new : true})
-
-//     res.json(updatePost)
-// }
+}

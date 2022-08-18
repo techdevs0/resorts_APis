@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { createFiles, getFiles } from "../controllers/file.js";
+import { createFiles, deleteFile, getFiles } from "../controllers/file.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -25,6 +25,7 @@ const fileRouter = express.Router();
 fileRouter.get('/', getFiles)
 
 fileRouter.post("/", upload.array("image"), createFiles);
+fileRouter.delete("/:id", deleteFile);
 
 //single file 
 // app.post("/uploadFile", upload.single("image"), (req, res) => {
