@@ -44,7 +44,18 @@ app.get('/all-sections/:id/:lang', async ( req, res ) => {
     try {
         const sections = await Section.find({lang: req.params.lang || 'en', page: req.params.id});
     
-        res.status(200).json([sections[0]?.content]);
+        res.status(200).json([sections[0].content]);
+        
+    } catch (error) {
+        res.status(404).json({ message: error.message})
+    }
+})
+
+app.get('/sections', async ( req, res ) => {
+    try {
+        const sections = await Section.find().populate('page',"-_id -__v").select("-__v");
+    
+        res.status(200).json(sections);
         
     } catch (error) {
         res.status(404).json({ message: error.message})

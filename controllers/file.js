@@ -4,6 +4,7 @@ import fs from "fs";
 
 export const getFiles = async (req,res) =>{
     let baseUrl = req.headers.host
+    console.log(req.headers.host,"req.headers.host")
     try {
         let files = await File.find();
         let updatedFiles = []
