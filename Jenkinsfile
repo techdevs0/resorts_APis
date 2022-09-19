@@ -33,13 +33,25 @@
 //     }
 // }
 
-node {
-    checkout scm
+// node {
+//     checkout scm
 
-    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+//     docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
         
-        def customImage = docker.build('adnanbashir3358/resort-apis:1.0')
+//         def customImage = docker.build('adnanbashir3358/resort-apis:1.0')
 
-        customImage.push()
+//         customImage.push()
+//     }
+// }
+
+pipeline {
+    agent { dockerfile true }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+                sh 'svn --version'
+            }
+        }
     }
 }
